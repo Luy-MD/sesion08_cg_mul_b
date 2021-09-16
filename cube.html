@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>MDN Games: Three.js demo</title>
+	<style>
+		body { margin: 0; padding: 0; font-size: 0; }
+		canvas { width: 100%; height: 100%; }
+	</style>
+</head>
+<body>
+
+//busca el objeto de forma remota
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+
+
+	var WIDTH = window.innerWidth;
+	var HEIGHT = window.innerHeight;
+
+
+//Se crea el render con la biblioteca de Three.js
+	var renderer = new THREE.WebGLRenderer({antialias:true}); //suavisa los bordes 
+	renderer.setSize(WIDTH, HEIGHT);
+	renderer.setClearColor(0xDDDDDD, 1); //le da color al objeto
+	document.body.appendChild(renderer.domElement);
+
+//Se crea la escena
+	var scene = new THREE.Scene();
+
+//Se crea la camara y se le dan las transformaciones necesarias para la escena
+	var camera = new THREE.PerspectiveCamera(70, WIDTH/HEIGHT);
+	camera.position.z = 60; //Se le da la transformacion de translacion a la camara en el eje Z
+	camera.position.x= 20; //Se le da la transformacion de translacion a la camara en el eje x
+	scene.add(camera); //Se agrega la camara a la escena 
+
+	const axesHelper = new THREE.AxesHelper( 35 );
+	scene.add( axesHelper );
+
+	var boxGeometry = new THREE.BoxGeometry(10, 10, 10); 
+		//Define el objeto geometrico y se le otorga los paramatros
+ 
+	var basicMaterial = new THREE.MeshLamberMaterial({color: 0xEAEFF2}); //0x0095DD
+	   //Se define el material del objeto, en este es solo un color plano
+
+	var cube = new THREE.Mesh(boxGeometry, basicMaterial); //Se aplica el material al objeto 
+	scene.add(cube); //Añade el cubo a la escena 
+	cube.rotation.set(0.4, 0.2, 0);//Se le otorga la transformacion de rotacion al objeto
+
+	var light = new THREE.PointLight(0xFFFFFF);
+	light.position.set(-10, 15, 50);
+	scene.add(light);
+ 
+
+//Renderiza toda la escena y objetos en ella 
+	function render() {
+		requestAnimationFrame(render); //Hace que se renderice en todos los frames
+		renderer.render(scene, camera); //Renderiza la escena y la camara 
+	}
+	render();
+</script>
+</body>
+</html>
